@@ -14,6 +14,12 @@
         input[type="checkbox"]+span {
           @apply border border-stone-50 bg-stone-50 px-4 py-3 rounded font-normal text-base w-fit flex items-center;
         }
+        input[type="checkbox"]:checked+span {
+          @apply border-blue-700;
+        }
+        input[type="checkbox"]:checked+span > i {
+          @apply text-blue-700;
+        }
         input[type="checkbox"]+span > i {
           @apply border border-stone-200 bg-white rounded text-white mr-2;
           width: 17.5px;
@@ -29,11 +35,27 @@
         .btn-disabled {
           @apply text-stone-500 border border-stone-200 bg-stone-50 shadow-none;
         }
+        .btn:hover {
+          @apply bg-slate-700;
+        }
+        @media (min-width: 640px) {
+          input[type="checkbox"]+span {
+            @apply text-xl;
+          }
+        }
+        @media (max-width: 639px) {
+          input[type="checkbox"]+span {
+            @apply text-sm;
+          }
+        }
+        #error_message {
+          @apply text-red-700 text-sm;
+        }
       }
     </style>
   </head>
   <body>
-    <div class="flex flex-col items-centerm mt-12">
+    <div class="flex flex-col items-center mt-12">
       <label class="confirmed-checkbox" for="confirmed_checkbox">
         <input type="checkbox" name="confirmed_checkbox" id="confirmed_checkbox" value="1">
         <span>
@@ -41,12 +63,25 @@
           <div class="ml-2">confirm</div>
         </span>
       </label>
+      <span id="error_message">check checkbox</span>
     </div>
     <button class="mx-auto flex btn btn-disabled mt-8" id="confirm_btn">create</button>
 
     <script>
-      document.getElementById("confirm_btn").addEventListener("click", function() {
-        alert("welcome to fandnext");
+      const confirmCheckbox = document.getElementById("confirmed_checkbox")
+      const confirmBtn = document.getElementById("confirm_btn")
+      const errorMessage = document.getElementById("error_message")
+
+      confirmCheckbox.addEventListener("change", function() {
+        if (this.checked) {
+          confirmBtn.classList.remove('btn-disabled')
+          confirmBtn.classList.add('btn-enabled')
+          errorMessage.style.display = 'none'
+        } else {
+          confirmBtn.classList.remove('btn-enabled')
+          confirmBtn.classList.add('btn-disabled')
+          errorMessage.style.display = 'block'
+        }
       })
     </script>
   </body>
